@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83e6fa930ddeaec48a08d8df5d8d52da, type: 3}
+  m_Name: Adventure
+  m_EditorClassIdentifier: 
+  considerations:
+  - weight: 1
+    consideration: {fileID: 11400000, guid: a9583e5ac02cb634ba8f5cea8e6202f7, type: 2}
+  actions:
+  - {fileID: 11400000, guid: 1e10994e1ff06904b8a1f6a68abce8b8, type: 2}
+  - {fileID: 11400000, guid: 953f458d15d77df4084bc53d68f7aa2f, type: 2}

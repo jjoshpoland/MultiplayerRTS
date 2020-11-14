@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a57fc1af657e3f4ca379985d395a880, type: 3}
+  m_Name: PursueClosestTarget
+  m_EditorClassIdentifier: 
+  considerations:
+  - weight: 1
+    consideration: {fileID: 11400000, guid: 9fe5fd53cc0d1be4bac4d77994fdd3f9, type: 2}
+  TargetConsiderations:
+  - weight: 0
+    consideration: {fileID: 11400000, guid: cf78a0c0ec0b41f4fae0cc3b8e3d036c, type: 2}
