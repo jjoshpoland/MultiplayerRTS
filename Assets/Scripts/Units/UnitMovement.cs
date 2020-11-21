@@ -7,12 +7,12 @@ using UnityEngine.Events;
 
 public class UnitMovement : NetworkBehaviour
 {
-    [SerializeField]
-    private Animator animator;
-    [SerializeField]
-    private NavMeshAgent agent;
+    [SerializeField] private Animator animator;
+    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private float lookSpeed;
     public float velocity;
 
+    public bool executingCommand = false;
 
     public bool Idle { get => !agent.hasPath; }
     public float StoppingDistance { get => agent.stoppingDistance; set => agent.stoppingDistance = value; }
@@ -47,6 +47,7 @@ public class UnitMovement : NetworkBehaviour
     [Command]
     public void CmdMove(Vector3 targetPos)
     {
+        executingCommand = true;
         Move(targetPos);
     }
 
@@ -54,6 +55,16 @@ public class UnitMovement : NetworkBehaviour
     public void Stop()
     {
         agent.ResetPath();
+    }
+
+    [Server]
+    public void LookAt(Transform target)
+    {
+        Vector3 targetVector = target.position - transform.position;
+        targetVector.y = 0; //remove vertical difference
+        Quaternion targetRotation = Quaternion.LookRotation(targetVector);
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, lookSpeed * Time.deltaTime);
     }
 
     [Server]
@@ -82,6 +93,7 @@ public class UnitMovement : NetworkBehaviour
         }
 
         agent.ResetPath();
+        executingCommand = false;
     }
 
     [Server]

@@ -50,6 +50,10 @@ public class UnitCommandHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This will become TryAttack i think
+    /// </summary>
+    /// <param name="target"></param>
     private void TryTarget(Targetable target)
     {
         foreach(Unit unit in selectionHandler.SelectedUnits)

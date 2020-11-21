@@ -11,6 +11,8 @@ public class UtilityAIController : MonoBehaviour
 
 
     float lastEvaluation;
+    [SerializeField]
+    private UnitMovement movement;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +23,11 @@ public class UtilityAIController : MonoBehaviour
     [ServerCallback]
     void Update()
     {
+        if(movement.executingCommand)
+        {
+            return;
+        }
+
         if(Time.time > lastEvaluation + evaluationInterval)
         {
             actions.Evaluate(unit);
