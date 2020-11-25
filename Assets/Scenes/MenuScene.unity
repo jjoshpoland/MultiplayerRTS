@@ -180,7 +180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1182613759071825401, guid: 43ce76286dc2b344ea3b08ac8aaeeec7, type: 3}
       propertyPath: spawnPrefabs.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1182613759071825401, guid: 43ce76286dc2b344ea3b08ac8aaeeec7, type: 3}
       propertyPath: offlineScene
@@ -198,6 +198,26 @@ PrefabInstance:
       propertyPath: spawnPrefabs.Array.data[2]
       value: 
       objectReference: {fileID: 2663068212455398959, guid: 97b260282cee34a4fa5beda97cf742bb, type: 3}
+    - target: {fileID: 1182613759071825401, guid: 43ce76286dc2b344ea3b08ac8aaeeec7, type: 3}
+      propertyPath: spawnPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 453848969542720370, guid: fe0e800d5760910469c9501ba4a33a09, type: 3}
+    - target: {fileID: 1182613759071825401, guid: 43ce76286dc2b344ea3b08ac8aaeeec7, type: 3}
+      propertyPath: gameOverHandler
+      value: 
+      objectReference: {fileID: 453848969542720370, guid: fe0e800d5760910469c9501ba4a33a09, type: 3}
+    - target: {fileID: 1182613759071825401, guid: 43ce76286dc2b344ea3b08ac8aaeeec7, type: 3}
+      propertyPath: spawnPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 365308587771601700, guid: 164d2b23075131e45ba4c00aab35c3ae, type: 3}
+    - target: {fileID: 1182613759071825401, guid: 43ce76286dc2b344ea3b08ac8aaeeec7, type: 3}
+      propertyPath: unitSpawnerPrefab
+      value: 
+      objectReference: {fileID: 365308587771601700, guid: 164d2b23075131e45ba4c00aab35c3ae, type: 3}
+    - target: {fileID: 1182613759071825401, guid: 43ce76286dc2b344ea3b08ac8aaeeec7, type: 3}
+      propertyPath: missionManagerPrefab
+      value: 
+      objectReference: {fileID: 4477571387439681009, guid: fe0e800d5760910469c9501ba4a33a09, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43ce76286dc2b344ea3b08ac8aaeeec7, type: 3}
 --- !u!1 &1104572657

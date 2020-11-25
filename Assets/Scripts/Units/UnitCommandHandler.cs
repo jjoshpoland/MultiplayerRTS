@@ -17,7 +17,11 @@ public class UnitCommandHandler : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
+
+        MissionManager.OnGameOverClient += DisableControls;
     }
+
+    
 
     // Update is called once per frame
     void Update()
@@ -42,6 +46,11 @@ public class UnitCommandHandler : MonoBehaviour
         
     }
 
+    private void OnDestroy()
+    {
+        MissionManager.OnGameOverClient -= DisableControls;
+    }
+
     private void TryMove(Vector3 point)
     {
         foreach(Unit unit in selectionHandler.SelectedUnits)
@@ -60,5 +69,10 @@ public class UnitCommandHandler : MonoBehaviour
         {
             unit.Targeter.CmdSetTarget(target.gameObject);
         }
+    }
+
+    private void DisableControls(int obj)
+    {
+        enabled = false;
     }
 }

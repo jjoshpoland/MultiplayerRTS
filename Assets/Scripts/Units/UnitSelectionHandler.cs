@@ -25,8 +25,20 @@ public class UnitSelectionHandler : MonoBehaviour
     {
         mainCamera = Camera.main;
         selectedUnits = new List<Unit>();
-        
+
+        Unit.AuthorityOnUnitDespawned += HandleUnitDespawned;
+        MissionManager.OnGameOverClient += DisableControls;
     }
+
+    
+
+    private void OnDestroy()
+    {
+        Unit.AuthorityOnUnitDespawned -= HandleUnitDespawned;
+        MissionManager.OnGameOverClient -= DisableControls;
+    }
+
+    
 
     private void Update()
     {
@@ -137,5 +149,15 @@ public class UnitSelectionHandler : MonoBehaviour
         
 
         
+    }
+
+    private void HandleUnitDespawned(Unit obj)
+    {
+        selectedUnits.Remove(obj);
+    }
+
+    private void DisableControls(int obj)
+    {
+        enabled = false;
     }
 }

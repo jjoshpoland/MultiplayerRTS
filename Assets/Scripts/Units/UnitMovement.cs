@@ -62,9 +62,13 @@ public class UnitMovement : NetworkBehaviour
     {
         Vector3 targetVector = target.position - transform.position;
         targetVector.y = 0; //remove vertical difference
-        Quaternion targetRotation = Quaternion.LookRotation(targetVector);
+        if(targetVector != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(targetVector);
 
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, lookSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, lookSpeed * Time.deltaTime);
+        }
+        
     }
 
     [Server]

@@ -22,7 +22,11 @@ public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
         NetworkServer.Spawn(newUnit, connectionToClient);
     }
 
-
+    [Server]
+    public void HandleDeathServer()
+    {
+        NetworkServer.Destroy(gameObject);
+    }
 
     #endregion
 

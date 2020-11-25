@@ -38,18 +38,22 @@ public class Unit : NetworkBehaviour
     {
         ServerOnUnitDespawned?.Invoke(this);
     }
+
+    public void HandleDeathServer()
+    {
+        NetworkServer.Destroy(gameObject);
+    }
     #endregion
 
     #region Client
-    public override void OnStartClient()
+    public override void OnStartAuthority()
     {
-        if (!isClientOnly || !hasAuthority) return;
         AuthorityOnUnitSpawned?.Invoke(this);
     }
 
     public override void OnStopClient()
     {
-        if (!isClientOnly || !hasAuthority) return;
+        if (!hasAuthority) return;
         AuthorityOnUnitDespawned?.Invoke(this);
     }
 

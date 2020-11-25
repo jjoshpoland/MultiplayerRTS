@@ -14,10 +14,15 @@ public class UtilityAIController : MonoBehaviour
     [SerializeField]
     private UnitMovement movement;
 
-    // Start is called before the first frame update
+    [ServerCallback]
     void Start()
     {
-        
+        //MissionManager.OnGameOverServer += DisableAI;
+    }
+    [ServerCallback]
+    private void OnDestroy()
+    {
+        //MissionManager.OnGameOverServer -= DisableAI;
     }
 
     [ServerCallback]
@@ -35,6 +40,11 @@ public class UtilityAIController : MonoBehaviour
         }
 
         actions.Do(unit);
+    }
+
+    private void DisableAI()
+    {
+        enabled = false;
     }
 }
 
