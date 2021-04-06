@@ -8,9 +8,11 @@ public class RTSPlayer : NetworkBehaviour
 {
     [SerializeField]
     private List<Unit> myUnits;
+    [SerializeField]
+    private List<Building> myBuildings;
 
     public List<Unit> MyUnits { get => myUnits; }
-
+    public List<Building> MyBuildings { get => myBuildings; }
     
 
     #region Server
@@ -18,12 +20,19 @@ public class RTSPlayer : NetworkBehaviour
     {
         Unit.ServerOnUnitSpawned += ServerHandleUnitSpawned;
         Unit.ServerOnUnitDespawned += ServerHandleUnitDespawned;
+        Building.ServerOnBuildingSpawned += ServerHandleBuildingSpawned;
+        Building.ServerOnBuildingDespawned += ServerHandleBuildingDespawned;
+
     }
+
+    
 
     public override void OnStopServer()
     {
         Unit.ServerOnUnitSpawned -= ServerHandleUnitSpawned;
         Unit.ServerOnUnitDespawned -= ServerHandleUnitDespawned;
+        Building.ServerOnBuildingSpawned -= ServerHandleBuildingSpawned;
+        Building.ServerOnBuildingDespawned -= ServerHandleBuildingDespawned;
     }
 
     /// <summary>
@@ -52,6 +61,27 @@ public class RTSPlayer : NetworkBehaviour
 
         myUnits.Remove(unit);
     }
+
+    private void ServerHandleBuildingSpawned(Building building)
+    {
+        if (building.connectionToClient.connectionId != connectionToClient.connectionId)
+        {
+            return;
+        }
+        myBuildings.Add(building);
+    }
+
+    private void ServerHandleBuildingDespawned(Building building)
+    {
+        if (building.connectionToClient.connectionId != connectionToClient.connectionId)
+        {
+            return;
+        }
+
+        myBuildings.Remove(building);
+    }
+
+    
     #endregion
 
     #region Client
@@ -61,6 +91,8 @@ public class RTSPlayer : NetworkBehaviour
 
         Unit.AuthorityOnUnitSpawned += AuthorityHandleUnitSpawned;
         Unit.AuthorityOnUnitDespawned += AuthorityHandleUnitDespawned;
+        Building.AuthorityOnBuildingSpawned += AuthorityHandleBuildingSpawned;
+        Building.AuthorityOnBuildingDespawned += AuthorityHandleBuildingDespawned;
     }
 
     public override void OnStopClient()
@@ -69,6 +101,8 @@ public class RTSPlayer : NetworkBehaviour
 
         Unit.AuthorityOnUnitSpawned -= AuthorityHandleUnitSpawned;
         Unit.AuthorityOnUnitDespawned -= AuthorityHandleUnitDespawned;
+        Building.AuthorityOnBuildingSpawned -= AuthorityHandleBuildingSpawned;
+        Building.AuthorityOnBuildingDespawned -= AuthorityHandleBuildingDespawned;
     }
 
     /// <summary>
@@ -89,7 +123,23 @@ public class RTSPlayer : NetworkBehaviour
         myUnits.Add(obj);
     }
 
-    
+    /// <summary>
+    /// Removes a Building from the player's unit list on the client side if the player has authority over that unit. Should be called whenever a unit is destroyed on the server.
+    /// </summary>
+    /// <param name="obj"></param>
+    private void AuthorityHandleBuildingDespawned(Building obj)
+    {
+        myBuildings.Remove(obj);
+    }
+
+    /// <summary>
+    /// Adds a Building to the player's unit list on the client side if the player has authority over that unit. Should be called whenever a unit is spawned on the server.
+    /// </summary>
+    /// <param name="obj"></param>
+    private void AuthorityHandleBuildingSpawned(Building obj)
+    {
+        myBuildings.Add(obj);
+    }
 
     #endregion
 }
