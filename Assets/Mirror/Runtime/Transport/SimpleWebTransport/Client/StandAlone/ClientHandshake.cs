@@ -25,21 +25,21 @@ namespace Mirror.SimpleWeb
 
                 string key = Convert.ToBase64String(keyBuffer);
                 string keySum = key + Constants.HandshakeGUID;
-                byte[] keySumBytes = Encoding.UTF8.GetBytes(keySum);
-                Log.Verbose($"Handshake Hashing {Encoding.UTF8.GetString(keySumBytes)}");
+                byte[] keySumBytes = Encoding.ASCII.GetBytes(keySum);
+                Log.Verbose($"Handshake Hashing {Encoding.ASCII.GetString(keySumBytes)}");
 
                 byte[] keySumHash = SHA1.Create().ComputeHash(keySumBytes);
 
                 string expectedResponse = Convert.ToBase64String(keySumHash);
                 string handshake =
-                    $"GET /chat HTTP/1.1\r\n" +
+                    $"GET {uri.PathAndQuery} HTTP/1.1\r\n" +
                     $"Host: {uri.Host}:{uri.Port}\r\n" +
                     $"Upgrade: websocket\r\n" +
                     $"Connection: Upgrade\r\n" +
                     $"Sec-WebSocket-Key: {key}\r\n" +
                     $"Sec-WebSocket-Version: 13\r\n" +
                     "\r\n";
-                byte[] encoded = Encoding.UTF8.GetBytes(handshake);
+                byte[] encoded = Encoding.ASCII.GetBytes(handshake);
                 stream.Write(encoded, 0, encoded.Length);
 
                 byte[] responseBuffer = new byte[1000];
@@ -52,7 +52,7 @@ namespace Mirror.SimpleWeb
                     return false;
                 }
 
-                string responseString = Encoding.UTF8.GetString(responseBuffer, 0, lengthOrNull.Value);
+                string responseString = Encoding.ASCII.GetString(responseBuffer, 0, lengthOrNull.Value);
 
                 string acceptHeader = "Sec-WebSocket-Accept: ";
                 int startIndex = responseString.IndexOf(acceptHeader) + acceptHeader.Length;

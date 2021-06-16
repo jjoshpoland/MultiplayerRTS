@@ -3,55 +3,19 @@ using UnityEngine;
 
 namespace Mirror
 {
+    // Deprecated 2020-10-06
     [Obsolete("Implement NetworkMessage instead. Use extension methods instead of Serialize/Deserialize, see https://github.com/vis2k/Mirror/pull/2317", true)]
-    public interface IMessageBase { }
+    public interface IMessageBase {}
 
+    // Deprecated 2020-10-06
     [Obsolete("Implement NetworkMessage instead. Use extension methods instead of Serialize/Deserialize, see https://github.com/vis2k/Mirror/pull/2317", true)]
-    public class MessageBase : IMessageBase { }
+    public class MessageBase : IMessageBase {}
 
-    public interface NetworkMessage
-    {
-    }
+    public struct ReadyMessage : NetworkMessage {}
 
-    #region Public System Messages
-    public struct ErrorMessage : NetworkMessage
-    {
-        public byte value;
+    public struct NotReadyMessage : NetworkMessage {}
 
-        public ErrorMessage(byte v)
-        {
-            value = v;
-        }
-    }
-
-    public struct ReadyMessage : NetworkMessage
-    {
-    }
-
-    public struct NotReadyMessage : NetworkMessage
-    {
-    }
-
-    public struct AddPlayerMessage : NetworkMessage
-    {
-    }
-
-    // Deprecated 5/2/2020
-    /// <summary>
-    /// Obsolete: Removed as a security risk. Use <see cref="NetworkServer.RemovePlayerForConnection(NetworkConnection, bool)">NetworkServer.RemovePlayerForConnection</see> instead.
-    /// </summary>
-    [Obsolete("Removed as a security risk. Use NetworkServer.RemovePlayerForConnection(NetworkConnection conn, bool keepAuthority = false) instead")]
-    public struct RemovePlayerMessage : NetworkMessage
-    {
-    }
-
-    public struct DisconnectMessage : NetworkMessage
-    {
-    }
-
-    public struct ConnectMessage : NetworkMessage
-    {
-    }
+    public struct AddPlayerMessage : NetworkMessage {}
 
     public struct SceneMessage : NetworkMessage
     {
@@ -68,9 +32,6 @@ namespace Mirror
         UnloadAdditive
     }
 
-    #endregion
-
-    #region System Messages requried for code gen path
     public struct CommandMessage : NetworkMessage
     {
         public uint netId;
@@ -90,58 +51,31 @@ namespace Mirror
         // -> ArraySegment to avoid unnecessary allocations
         public ArraySegment<byte> payload;
     }
-    #endregion
 
-    #region Internal System Messages
     public struct SpawnMessage : NetworkMessage
     {
-        /// <summary>
-        /// netId of new or existing object
-        /// </summary>
+        // netId of new or existing object
         public uint netId;
-        /// <summary>
-        /// Is the spawning object the local player. Sets ClientScene.localPlayer
-        /// </summary>
         public bool isLocalPlayer;
-        /// <summary>
-        /// Sets hasAuthority on the spawned object
-        /// </summary>
+        // Sets hasAuthority on the spawned object
         public bool isOwner;
-        /// <summary>
-        /// The id of the scene object to spawn
-        /// </summary>
         public ulong sceneId;
-        /// <summary>
-        /// The id of the prefab to spawn
-        /// <para>If sceneId != 0 then it is used instead of assetId</para>
-        /// </summary>
+        // If sceneId != 0 then it is used instead of assetId
         public Guid assetId;
-        /// <summary>
-        /// Local position
-        /// </summary>
+        // Local position
         public Vector3 position;
-        /// <summary>
-        /// Local rotation
-        /// </summary>
+        // Local rotation
         public Quaternion rotation;
-        /// <summary>
-        /// Local scale
-        /// </summary>
+        // Local scale
         public Vector3 scale;
-        /// <summary>
-        /// The serialized component data
-        /// <remark>ArraySegment to avoid unnecessary allocations</remark>
-        /// </summary>
+        // serialized component data
+        // ArraySegment to avoid unnecessary allocations
         public ArraySegment<byte> payload;
     }
 
-    public struct ObjectSpawnStartedMessage : NetworkMessage
-    {
-    }
+    public struct ObjectSpawnStartedMessage : NetworkMessage {}
 
-    public struct ObjectSpawnFinishedMessage : NetworkMessage
-    {
-    }
+    public struct ObjectSpawnFinishedMessage : NetworkMessage {}
 
     public struct ObjectDestroyMessage : NetworkMessage
     {
@@ -153,7 +87,7 @@ namespace Mirror
         public uint netId;
     }
 
-    public struct UpdateVarsMessage : NetworkMessage
+    public struct EntityStateMessage : NetworkMessage
     {
         public uint netId;
         // the serialized component data
@@ -180,5 +114,4 @@ namespace Mirror
         public double clientTime;
         public double serverTime;
     }
-    #endregion
 }

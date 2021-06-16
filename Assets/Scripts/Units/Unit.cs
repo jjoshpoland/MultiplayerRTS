@@ -46,6 +46,8 @@ public class Unit : NetworkBehaviour
     #endregion
 
     #region Client
+    
+
     public override void OnStartAuthority()
     {
         AuthorityOnUnitSpawned?.Invoke(this);

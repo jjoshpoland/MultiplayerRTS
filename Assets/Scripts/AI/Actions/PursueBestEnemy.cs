@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 [CreateAssetMenu(fileName = "AttackBestTarget-Action", menuName = "RTS/AI/Actions/AttackBestTarget")]
 public class PursueBestEnemy : Action
@@ -116,6 +117,14 @@ public class PursueBestEnemy : Action
             if(obj.TryGetComponent<Targetable>(out Targetable potentialTarget))
             {
                 float weight = 0;
+
+                if(potentialTarget.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkID))
+                {
+                    if(networkID.connectionToClient == targeter.connectionToClient)
+                    {
+                        continue;
+                    }
+                }
 
                 foreach(ConsiderationSlot consideration in TargetConsiderations)
                 {
